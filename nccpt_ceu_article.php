@@ -182,6 +182,14 @@ function nccpt_ceu_setup() {
 
 /* adding banner to post */
 add_filter( 'the_content', 'nccpt_ceu_banner');
+
+/* adding banner specific styles */
+function nccpt_ceu_styles() {
+  wp_register_style('nccpt_ceu_styles', plugins_url('nccpt_ceu_style.css', __FILE__) );
+  wp_enqueue_style('nccpt_ceu_styles');
+}
+
+add_action( 'wp_enqueue_scripts' , 'nccpt_ceu_styles');
 /*
  * Define where metabox shows up.
  */
