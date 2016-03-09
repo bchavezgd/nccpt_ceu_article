@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) )  {
 	exit;
 }
 
-// global vars
-
 /*
  *  footer banner
  */
@@ -33,18 +31,21 @@ function is_nccpt_ceu_article($post) {
 }
 
 function nccpt_ceu_banner($content) {
+  $post_id = get_the_ID();
+  $nccpt_ceu_stored_meta = get_post_meta($post_id);
   $ceu_url = $nccpt_ceu_stored_meta["store_url"][0];
   $ceu_value = $nccpt_ceu_stored_meta["ceu_value"][0];
-  $nccpt_ceu_banner_string = '';
-  $nccpt_ceu_banner_string_test = "<p>this is a test string</p>";
+  $nccpt_ceu_banner_string =<<< _HTML
+  <div class="nccpt-ceu-banner">
+    <h2>Read the Article?</h2>
+    <p> Take the <a href="{$ceu_url}" target="_blank">Quiz</a> and earn {$ceu_value} CEUs.</p>
+  </div>
+_HTML;
 if ( is_nccpt_ceu_article() ) {
-     $content .= $nccpt_ceu_banner_string_test;
+     $content .= $nccpt_ceu_banner_string;
   }
     return $content;
-
 };
-
-add_filter('the_content', 'nccpt_ceu_banner');
 
 /*
 
@@ -129,8 +130,6 @@ function nccpt_ceu_meta_box_container($post) {
   $nccpt_ceu_stored_meta = get_post_meta($post_id);
 
 	?>
-
-
   <div class="modal-container">
     <div class="form-box">
       <p>
@@ -157,12 +156,8 @@ function nccpt_ceu_meta_box_container($post) {
       </p>
     </div>
   </div>
-
-
     <?php
 }
-
-
 /*
  * Adds Metabox (container) to the main column on the ceu article edit screens.
  */
@@ -185,6 +180,8 @@ function nccpt_ceu_setup() {
   add_action( 'save_post', 'nccpt_ceu_crud');
 }
 
+/* adding banner to post */
+add_filter( 'the_content', 'nccpt_ceu_banner');
 /*
  * Define where metabox shows up.
  */
