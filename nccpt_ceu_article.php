@@ -11,7 +11,34 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Domain Path: /languages
 Text Domain: nccpt_ceu
 */
+//Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) )  {
+	exit;
+}
 
+/*
+ *  footer banner
+ */
+
+function nccpt_is_ceu_article() {
+  if ( !empty($nccpt_ceu_stored_meta["ceu_value"]) &&  !empty($nccpt_ceu_stored_meta["store_url"]) ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function nccpt_banner($content) {
+
+
+  if(is_singular() && is_main_query() && nccpt_is_ceu_article() ) {
+    return $content . '<section><p> this the elephantaviator plug in test! </p> </section>';
+  } else {
+    return $content;
+  }
+};
+
+add_filter('the_content', 'nccpt_banner');
 
 /*
 
@@ -37,39 +64,38 @@ function nccpt_ceu_crud($post_id) {
   $new_ceu_value = $_POST["ceu_value"];
   $old_ceu_value = get_post_meta( $post_id, "ceu_value", true);
 
+  $new_store_url = $_POST["store_url"];
+  $old_store_url = get_post_meta( $post_id, "store_url", true);
+
   if( $is_autosave || $is_revision || $is_nonce_valid ) {
   return;
   }
 
   /* saving ceu value */
 
-  /*
-  *  1. if a new meta value is added
-  *  and there wasn't a previous value,
-  *  Create it.
-  *  C.r.u.d.
-  */
-  if ($new_ceu_value && '' == $old_ceu_value) {
-  // if ($old_ceu_value == null || $old_ceu_value == '') {
-    add_post_meta($post_id, "ceu_value", $new_ceu_value);
-  }
-  /*
+ /*
+  * 1. if a new meta value is added
+  *    and there wasn't a previous value, Create it.
   * 2. If new meta value doesn't match old value, update it.
-  */
-  if ($new_ceu_value != $old_ceu_value) {
-    update_post_meta($post_id, "ceu_value", $new_ceu_value, $old_ceu_value);
-  }
-  /*
   * 3. If there is no new meta value, but an old one exists;
   *    Delete old value.
   */
+
+  // 1
+  if ($new_ceu_value && '' == $old_ceu_value) {
+    add_post_meta($post_id, "ceu_value", $new_ceu_value);
+  }
+  // 2.
+  if ($new_ceu_value != $old_ceu_value) {
+    update_post_meta($post_id, "ceu_value", $new_ceu_value, $old_ceu_value);
+  }
+  // 3.
   if (''== $new_ceu_value) {
     delete_post_meta($post_id, "ceu_value");
   }
 
   /* for url */
-  $new_store_url = $_POST["store_url"];
-  $old_store_url = get_post_meta( $post_id, "store_url", true);
+
 
   if ($new_store_url && '' == $old_store_url) {
     add_post_meta($post_id, "store_url", $new_store_url);
@@ -103,32 +129,32 @@ function nccpt_ceu_meta_box_container($post) {
 	?>
 
 
-<div class="modal-container">
-  <div class="form-box">
-    <p>
-      <label for="ceu_value">
-        <?php _e("CEU Value:"); ?>
-      </label>
-      <input name="ceu_value" type="text" class="widefat" <?php
-        if (!empty( $nccpt_ceu_stored_meta["ceu_value"] )) {
-          echo 'value="' . esc_attr($nccpt_ceu_stored_meta["ceu_value"][0])) . '"';
+  <div class="modal-container">
+    <div class="form-box">
+      <p>
+        <label for="ceu_value">
+          <?php _e("CEU Value:"); ?>
+        </label>
+        <input name="ceu_value" type="text" class="widefat" <?php
+          if ( !empty( $nccpt_ceu_stored_meta["ceu_value"] ) ) {
+            echo sprintf('value="%s"', $nccpt_ceu_stored_meta["ceu_value"][0]);
+          } else {
+            echo sprintf('placeholder="%s"', __("Enter CEU Value")) ;
+          }
+          ?>>
+      </p>
+      <p>
+        <label for="store_url"><?php _e("Store Url:"); ?></label>
+        <input type="url" name="store_url" class="widefat" <?php
+        if (!empty( $nccpt_ceu_stored_meta["store_url"] )) {
+          echo sprintf('value="%s"', $nccpt_ceu_stored_meta["store_url"][0]);
         } else {
-          echo 'placeholder="' . _e('Enter CEU Value') ) . '"';
+          echo sprintf('placeholder="%s"', __("Enter Store URL"));
         }
         ?>>
-    </p>
-    <p>
-      <label for="store_url"><?php _e("Store Url:"); ?></label>
-      <input type="url" name="store_url" class="widefat" <?php
-      if (!empty( $nccpt_ceu_stored_meta["store_url"] )) {
-        echo 'value="' . $nccpt_ceu_stored_meta["store_url"][0] . '"';
-      } else {
-        echo _e('placeholder="Enter URL"');
-      }
-      ?>>
-    </p>
+      </p>
+    </div>
   </div>
-</div>
 
 
     <?php
