@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NCCPT CEU Articles
-Plugin URI:
+Plugin URI:  https://github.com/bchavezgd/nccpt_ceu_article
 Description: Metabox
 Version:     v160304
 Author:      brian chavez
@@ -16,11 +16,15 @@ if ( ! defined( 'ABSPATH' ) )  {
 	exit;
 }
 
+// global vars
+
 /*
  *  footer banner
  */
 
-function nccpt_is_ceu_article() {
+function is_nccpt_ceu_article($post) {
+  $post_id = get_the_ID();
+  $nccpt_ceu_stored_meta = get_post_meta($post_id);
   if ( !empty($nccpt_ceu_stored_meta["ceu_value"]) &&  !empty($nccpt_ceu_stored_meta["store_url"]) ) {
     return true;
   } else {
@@ -28,17 +32,19 @@ function nccpt_is_ceu_article() {
   }
 }
 
-function nccpt_banner($content) {
-
-
-  if(is_singular() && is_main_query() && nccpt_is_ceu_article() ) {
-    return $content . '<section><p> this the elephantaviator plug in test! </p> </section>';
-  } else {
-    return $content;
+function nccpt_ceu_banner($content) {
+  $ceu_url = $nccpt_ceu_stored_meta["store_url"][0];
+  $ceu_value = $nccpt_ceu_stored_meta["ceu_value"][0];
+  $nccpt_ceu_banner_string = '';
+  $nccpt_ceu_banner_string_test = "<p>this is a test string</p>";
+if ( is_nccpt_ceu_article() ) {
+     $content .= $nccpt_ceu_banner_string_test;
   }
+    return $content;
+
 };
 
-add_filter('the_content', 'nccpt_banner');
+add_filter('the_content', 'nccpt_ceu_banner');
 
 /*
 
@@ -71,7 +77,7 @@ function nccpt_ceu_crud($post_id) {
   return;
   }
 
-  /* saving ceu value */
+  /* saving, updating, deleting,  ceu and url values */
 
  /*
   * 1. if a new meta value is added
@@ -95,8 +101,6 @@ function nccpt_ceu_crud($post_id) {
   }
 
   /* for url */
-
-
   if ($new_store_url && '' == $old_store_url) {
     add_post_meta($post_id, "store_url", $new_store_url);
   }
@@ -115,15 +119,13 @@ function nccpt_ceu_meta_box_container($post) {
 	/*
 		this is where the meta box code actually goes.
 
-		each input needs to be run though nounce(),
+		each input needs to be run though nonce(),
         validated with jquery,
         and sanitized
         before being added to DB.
 	*/
   $post_id = get_the_ID();
-  // create nonce for security
   wp_nonce_field(basename(__FILE__), 'nccpt_ceu_metabox_nonce');
-
   $nccpt_ceu_stored_meta = get_post_meta($post_id);
 
 	?>
