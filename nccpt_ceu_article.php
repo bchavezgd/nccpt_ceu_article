@@ -2,7 +2,7 @@
 /*
 Plugin Name: NCCPT CEU Articles
 Plugin URI:  https://github.com/bchavezgd/nccpt_ceu_article
-Description: For storing and displaying CEU Values and product link for articles that need it. 
+Description: For storing and displaying CEU Values and product link for articles that need it.
 Version:     v160309
 Author:      Brian Chavez
 Author URI:  http://elephantaviator.com
@@ -14,10 +14,10 @@ Text Domain: nccpt_ceu
 //Exit if accessed directly
 if (!defined('ABSPATH')){exit;}
 
-
+// banner for posts
 include 'nccpt_ceu_article_banner.php';
+// saving additional metadata
 include 'nccpt_ceu_article_crud.php';
-
 // metabox callback
 include 'nccpt_ceu_article_metabox.php';
 
@@ -32,7 +32,7 @@ function nccpt_ceu_meta_box() {
 	  'nccpt_ceu_meta_box_container',
 	  'post',
 	  'side',
-	  'default'
+	  'high'
 	);
 }
 

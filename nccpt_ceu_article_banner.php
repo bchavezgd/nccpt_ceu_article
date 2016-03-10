@@ -2,21 +2,18 @@
 /*
  *  footer banner
  */
-
- function is_nccpt_ceu_article() {
-   $post_id = get_the_ID();
-   $nccpt_ceu_stored_meta = get_post_meta($post_id);
-   if ( !empty($nccpt_ceu_stored_meta["ceu_value"]) &&  !empty($nccpt_ceu_stored_meta["store_url"]) ) {
-     return true;
-   } else {
-     return false;
-   }
+function is_nccpt_ceu_article() {
+ $nccpt_ceu_stored_meta = get_post_meta( get_the_ID() );
+ if ( !empty($nccpt_ceu_stored_meta["ceu_value"]) &&  !empty($nccpt_ceu_stored_meta["store_url"]) ) {
+   return true;
+ } else {
+   return false;
  }
+}
 
 function nccpt_ceu_banner($content) {
   if ( is_nccpt_ceu_article() ) {
-    $post_id = get_the_ID();
-    $nccpt_ceu_stored_meta = get_post_meta($post_id);
+    $nccpt_ceu_stored_meta = get_post_meta( get_the_ID() );
     $ceu_url =  $nccpt_ceu_stored_meta["store_url"][0];
     $ceu_value = $nccpt_ceu_stored_meta["ceu_value"][0];
     $nccpt_ceu_banner_string =<<< _HTML
