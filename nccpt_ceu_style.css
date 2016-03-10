@@ -6,14 +6,19 @@
   width: 100%;
   margin: 3rem auto 1em;
   padding: 1.5em;
+  background-color: rgb(1, 123, 150);
 
-  background-color: #eee;
-
+  border-radius: 6px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   font-size: 1.25em;
   text-align: center;
+
+  color: white;
 }
 
 .nccpt-ceu-banner h2 { margin: 0 auto 0.25em; }
 
 .nccpt-ceu-banner p { margin: 0;}
+
+.nccpt-ceu-banner p a { color: #ccc}
+.nccpt-ceu-banner p a:hover { color: white}

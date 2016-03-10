@@ -2,7 +2,7 @@
 /*
 Plugin Name: NCCPT CEU Articles
 Plugin URI:  https://github.com/bchavezgd/nccpt_ceu_article
-Description: Metabox
+Description: For storing and displaying CEU Values and product link for articles that need it. 
 Version:     v160309
 Author:      Brian Chavez
 Author URI:  http://elephantaviator.com
