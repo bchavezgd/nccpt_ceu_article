@@ -1,0 +1,56 @@
+/*
+ *  nccpt_ceu styles
+*/
+
+.nccpt-ceu-banner {
+  width: 100%;
+  margin: 3rem auto 1em;
+  padding: 1.5em;
+  background-color: rgb(1, 123, 150);
+
+  border-radius: 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  font-size: 1.25em;
+  text-align: center;
+
+  color: white;
+}
+
+.nccpt-ceu-banner h2 { margin: 0 auto 0.25em; }
+.nccpt-ceu-banner p { margin: 0;}
+.nccpt-ceu-banner p a { color: #ccc}
+.nccpt-ceu-banner p a:hover { color: white}
+
+
+
+.nccpt-hero{
+  width: 600px;
+  margin: 0 auto;
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+.nccpt-hero img{
+  position: absolute;
+  top: 0;
+}
+.nccpt-ceu-badge{
+  position: absolute;
+  top: 3em;
+  right: 2em;
+  z-index: 10;
+}
+.nccpt-ceu-value{
+  width: 5em;
+  /*height: 4em;*/
+  border-radius: 50%;
+  padding: 1em;
+  background: lime;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  box-shadow: 1px 1px 1px 0px rgb(46, 43, 85);
+}
+.nccpt-ceu-value span {
+  margin: 0;
+}
