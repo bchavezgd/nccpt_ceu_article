@@ -2,10 +2,15 @@
 
 ### todo:
 
+- [ ] fix `undefined variable` error.
 - [x] Create module to display ceu value and link at the bottom of any article that has a ceu value.
-- [ ] Create a "button" on the top of the page to indicate the ceu value.
+- [x] Create a "button" on the top of the page to indicate the ceu value.
 - [x] Sanitize input.
   - [data validation and sanitization.](https://codex.wordpress.org/Data_Validation)
+
+## 160922
+
+Create a "button" on the top of the page to indicate the ceu value.
 ## 160310
 
   added sanitization and validation.

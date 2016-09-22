@@ -14,6 +14,7 @@ function nccpt_ceu_meta_box_container($post) {
           <?php _e("CEU Value:"); ?>
         </label>
         <input name="ceu_value" type="number" max="1.0" step="0.01" class="widefat" <?php
+
           if ( !empty( $nccpt_ceu_stored_meta["ceu_value"] ) ) {
             echo sprintf('value="%s"', $nccpt_ceu_stored_meta["ceu_value"][0]);
           } else {
